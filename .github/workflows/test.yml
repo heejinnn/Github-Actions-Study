@@ -1,24 +1,29 @@
-name: CI
+# workflow 이름
+name: test-CI
 
-# Controls when the workflow will run
+# workflow가 언제 실행될지에 대한 설명(When)
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
+  # main 브랜치에 pr을 올리는 경우(main 브랜치에서 분기한 브랜치도 실행된다.)
   pull_request:
     branches: 
       - 'main'
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+# workflow가 어떻게 실행될지에 대한 설명(How)
 jobs:
   # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    runs-on: macos-latest
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+    # ruby 설치
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7
+
+    # fastlane 설치
+    - name: Install Fastlane
+      run: brew install fastlane
+
+    - name: Run a one-line script
+      run: echo Hello, world!!!!!!!!!!!!!!!!!
